@@ -1,0 +1,360 @@
+import type {
+  AppModule,
+  CategorySummary,
+  DashboardMetric,
+  InventoryAlert,
+  OrderSummary,
+  ProductOptionSummary,
+  ProductSummary,
+  ReportSummary,
+  SessionUser,
+} from "@/types/domain";
+
+export const demoSessionUser: SessionUser = {
+  id: "user_admin_demo",
+  companyId: "company_demo",
+  companyName: "Caixa Food Demo",
+  role: "ADMIN",
+  name: "Leandro Demo",
+  email: "admin@caixafood.dev",
+};
+
+export const appModules: AppModule[] = [
+  {
+    title: "Admin",
+    description: "Cadastro, estoque, usuarios e relatorios.",
+    href: "/admin",
+    accent: "from-amber-300 via-orange-400 to-rose-500",
+  },
+  {
+    title: "PDV",
+    description: "Pedido rapido, carrinho e fechamento de venda.",
+    href: "/pdv",
+    accent: "from-emerald-300 via-teal-400 to-cyan-500",
+  },
+  {
+    title: "Cozinha",
+    description: "Fila operacional com status e observacoes.",
+    href: "/cozinha",
+    accent: "from-sky-300 via-blue-400 to-indigo-500",
+  },
+  {
+    title: "Cardapio",
+    description: "Vitrine publica pronta para evoluir para QR Code.",
+    href: "/cardapio",
+    accent: "from-fuchsia-300 via-pink-400 to-rose-500",
+  },
+];
+
+export const dashboardMetrics: DashboardMetric[] = [
+  {
+    label: "Vendas do dia",
+    value: "R$ 3.420,00",
+    hint: "12% acima da media dos ultimos 7 dias.",
+  },
+  {
+    label: "Pedidos em aberto",
+    value: "18",
+    hint: "6 aguardando cozinha e 4 esperando pagamento.",
+  },
+  {
+    label: "Caixa ativo",
+    value: "01",
+    hint: "Aberto as 08:00 com fundo inicial de R$ 200,00.",
+  },
+  {
+    label: "Itens com estoque baixo",
+    value: "03",
+    hint: "Revisar Coca-Cola 2L, pao brioche e molho especial.",
+  },
+];
+
+export const categories: CategorySummary[] = [
+  {
+    id: "cat_burgers",
+    name: "Burgers",
+    description: "Lanches principais da casa.",
+    productCount: 3,
+    active: true,
+  },
+  {
+    id: "cat_sides",
+    name: "Acompanhamentos",
+    description: "Batatas, molhos e adicionais rapidos.",
+    productCount: 1,
+    active: true,
+  },
+  {
+    id: "cat_drinks",
+    name: "Bebidas",
+    description: "Refrigerantes, limonadas e refrescos.",
+    productCount: 2,
+    active: true,
+  },
+];
+
+export const productOptions: ProductOptionSummary[] = [
+  {
+    id: "opt_classic_cheese",
+    productId: "prod_classic",
+    name: "Queijo extra",
+    price: 4,
+    kind: "EXTRA",
+  },
+  {
+    id: "opt_classic_bacon",
+    productId: "prod_classic",
+    name: "Bacon crocante",
+    price: 6,
+    kind: "EXTRA",
+  },
+  {
+    id: "opt_bacon_onion",
+    productId: "prod_bacon",
+    name: "Cebola caramelizada",
+    price: 3.5,
+    kind: "EXTRA",
+  },
+  {
+    id: "opt_bacon_combo",
+    productId: "prod_bacon",
+    name: "Molho burger",
+    price: 2.5,
+    kind: "EXTRA",
+  },
+  {
+    id: "opt_veggie_cheddar",
+    productId: "prod_veggie",
+    name: "Cheddar vegetal",
+    price: 4.5,
+    kind: "EXTRA",
+  },
+  {
+    id: "opt_fries_large",
+    productId: "prod_fries",
+    name: "Porcao grande",
+    price: 7,
+    kind: "PORTION",
+  },
+  {
+    id: "opt_fries_cheddar",
+    productId: "prod_fries",
+    name: "Cheddar e bacon",
+    price: 8,
+    kind: "EXTRA",
+  },
+  {
+    id: "opt_soda_cup",
+    productId: "prod_soda",
+    name: "Copo com gelo",
+    price: 0,
+    kind: "EXTRA",
+  },
+  {
+    id: "opt_lemonade_large",
+    productId: "prod_lemonade",
+    name: "Jarra 1L",
+    price: 12,
+    kind: "PORTION",
+  },
+  {
+    id: "opt_lemonade_mint",
+    productId: "prod_lemonade",
+    name: "Hortela extra",
+    price: 1.5,
+    kind: "EXTRA",
+  },
+];
+
+export const products: ProductSummary[] = [
+  {
+    id: "prod_classic",
+    categoryId: "cat_burgers",
+    categoryName: "Burgers",
+    name: "Classic Burger",
+    description: "Pao brioche, carne 160g, queijo e molho da casa.",
+    imageUrl: "/menu/classic-burger.svg",
+    price: 24.9,
+    stockQuantity: 18,
+    minStock: 8,
+    active: true,
+    options: productOptions.filter((option) => option.productId === "prod_classic"),
+  },
+  {
+    id: "prod_bacon",
+    categoryId: "cat_burgers",
+    categoryName: "Burgers",
+    name: "Bacon Smash",
+    description: "Duplo smash, cheddar e bacon crocante.",
+    imageUrl: "/menu/bacon-smash.svg",
+    price: 31.9,
+    stockQuantity: 9,
+    minStock: 8,
+    active: true,
+    options: productOptions.filter((option) => option.productId === "prod_bacon"),
+  },
+  {
+    id: "prod_veggie",
+    categoryId: "cat_burgers",
+    categoryName: "Burgers",
+    name: "Veggie Melt",
+    description: "Blend vegetal, cebola roxa e maionese verde.",
+    imageUrl: "/menu/veggie-melt.svg",
+    price: 27.5,
+    stockQuantity: 6,
+    minStock: 6,
+    active: true,
+    options: productOptions.filter((option) => option.productId === "prod_veggie"),
+  },
+  {
+    id: "prod_fries",
+    categoryId: "cat_sides",
+    categoryName: "Acompanhamentos",
+    name: "Batata Crocante",
+    description: "Porcao media com paprika defumada.",
+    imageUrl: "/menu/batata-crocante.svg",
+    price: 14.9,
+    stockQuantity: 22,
+    minStock: 10,
+    active: true,
+    options: productOptions.filter((option) => option.productId === "prod_fries"),
+  },
+  {
+    id: "prod_soda",
+    categoryId: "cat_drinks",
+    categoryName: "Bebidas",
+    name: "Coca-Cola 2L",
+    description: "Garrafa compartilhavel para salao ou delivery.",
+    imageUrl: "/menu/coca-2l.svg",
+    price: 13,
+    stockQuantity: 4,
+    minStock: 6,
+    active: true,
+    options: productOptions.filter((option) => option.productId === "prod_soda"),
+  },
+  {
+    id: "prod_lemonade",
+    categoryId: "cat_drinks",
+    categoryName: "Bebidas",
+    name: "Limonada da Casa",
+    description: "Limonada artesanal com hortela.",
+    imageUrl: "/menu/limonada-casa.svg",
+    price: 9.5,
+    stockQuantity: 16,
+    minStock: 5,
+    active: true,
+    options: productOptions.filter((option) => option.productId === "prod_lemonade"),
+  },
+];
+
+export const kitchenOrders: OrderSummary[] = [
+  {
+    id: "order_102",
+    code: 102,
+    type: "MESA",
+    status: "NOVO",
+    customerName: "Mesa 04",
+    tableNumber: "04",
+    total: 56,
+    createdAt: "09:42",
+    notes: "Sem cebola no burger 2.",
+    items: [
+      {
+        productName: "Bacon Smash",
+        imageUrl: "/menu/bacon-smash.svg",
+        quantity: 2,
+        unitPrice: 31.9,
+        subtotal: 63.8,
+        notes: "1 sem cebola",
+        selectedOptions: [],
+      },
+      {
+        productName: "Batata Crocante",
+        imageUrl: "/menu/batata-crocante.svg",
+        quantity: 1,
+        unitPrice: 14.9,
+        subtotal: 14.9,
+        selectedOptions: [],
+      },
+    ],
+  },
+  {
+    id: "order_101",
+    code: 101,
+    type: "BALCAO",
+    status: "EM_PREPARO",
+    customerName: "Retirada Joao",
+    total: 41.8,
+    createdAt: "09:35",
+    items: [
+      {
+        productName: "Classic Burger",
+        imageUrl: "/menu/classic-burger.svg",
+        quantity: 1,
+        unitPrice: 24.9,
+        subtotal: 24.9,
+        selectedOptions: [],
+      },
+      {
+        productName: "Limonada da Casa",
+        imageUrl: "/menu/limonada-casa.svg",
+        quantity: 1,
+        unitPrice: 9.5,
+        subtotal: 9.5,
+        selectedOptions: [],
+      },
+    ],
+  },
+  {
+    id: "order_099",
+    code: 99,
+    type: "DELIVERY",
+    status: "PRONTO",
+    customerName: "Ana Delivery",
+    total: 44.9,
+    createdAt: "09:20",
+    items: [
+      {
+        productName: "Veggie Melt",
+        imageUrl: "/menu/veggie-melt.svg",
+        quantity: 1,
+        unitPrice: 27.5,
+        subtotal: 27.5,
+        notes: "Caprichar no molho",
+        selectedOptions: [],
+      },
+      {
+        productName: "Batata Crocante",
+        imageUrl: "/menu/batata-crocante.svg",
+        quantity: 1,
+        unitPrice: 14.9,
+        subtotal: 14.9,
+        selectedOptions: [],
+      },
+    ],
+  },
+];
+
+export const inventoryAlerts: InventoryAlert[] = [
+  { productName: "Coca-Cola 2L", currentStock: 4, minimumStock: 6 },
+  { productName: "Veggie Melt", currentStock: 6, minimumStock: 6 },
+  { productName: "Bacon Smash", currentStock: 9, minimumStock: 8 },
+];
+
+export const reportCards: ReportSummary[] = [
+  {
+    title: "Ticket medio",
+    value: "R$ 42,70",
+    description: "Baseado nas 80 vendas mais recentes.",
+  },
+  {
+    title: "Forma lider",
+    value: "Pix",
+    description: "49% das vendas finalizadas hoje.",
+  },
+  {
+    title: "Produto campeao",
+    value: "Classic Burger",
+    description: "23 unidades no acumulado do dia.",
+  },
+];

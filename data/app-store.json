@@ -1,0 +1,913 @@
+{
+  "company": {
+    "id": "company_demo",
+    "name": "Caixa Food Demo"
+  },
+  "nextOrderCode": 110,
+  "categories": [
+    {
+      "id": "cat_burgers",
+      "companyId": "company_demo",
+      "name": "Burgers",
+      "description": "Lanches principais da casa.",
+      "active": true,
+      "sortOrder": 0,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T12:00:00.000Z"
+    },
+    {
+      "id": "cat_sides",
+      "companyId": "company_demo",
+      "name": "Acompanhamentos",
+      "description": "Batatas, molhos e adicionais rapidos.",
+      "active": true,
+      "sortOrder": 1,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T12:00:00.000Z"
+    },
+    {
+      "id": "cat_drinks",
+      "companyId": "company_demo",
+      "name": "Bebidas",
+      "description": "Refrigerantes, limonadas e refrescos.",
+      "active": true,
+      "sortOrder": 2,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T12:00:00.000Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_classic",
+      "companyId": "company_demo",
+      "categoryId": "cat_burgers",
+      "name": "Classic Burger",
+      "description": "Pao brioche, carne 160g, queijo e molho da casa.",
+      "imageUrl": "/menu/classic-burger.svg",
+      "price": 24.9,
+      "stockQuantity": 15,
+      "minStock": 8,
+      "active": true,
+      "stockControl": true,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T14:04:15.170Z"
+    },
+    {
+      "id": "prod_bacon",
+      "companyId": "company_demo",
+      "categoryId": "cat_burgers",
+      "name": "Bacon Smash",
+      "description": "Duplo smash, cheddar e bacon crocante.",
+      "imageUrl": "/menu/bacon-smash.svg",
+      "price": 31.9,
+      "stockQuantity": 5,
+      "minStock": 8,
+      "active": true,
+      "stockControl": true,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T16:12:43.285Z"
+    },
+    {
+      "id": "prod_veggie",
+      "companyId": "company_demo",
+      "categoryId": "cat_burgers",
+      "name": "Veggie Melt",
+      "description": "Blend vegetal, cebola roxa e maionese verde.",
+      "imageUrl": "/menu/veggie-melt.svg",
+      "price": 27.5,
+      "stockQuantity": 5,
+      "minStock": 6,
+      "active": true,
+      "stockControl": true,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T15:30:23.915Z"
+    },
+    {
+      "id": "prod_fries",
+      "companyId": "company_demo",
+      "categoryId": "cat_sides",
+      "name": "Batata Crocante",
+      "description": "Porcao media com paprika defumada.",
+      "imageUrl": "/menu/batata-crocante.svg",
+      "price": 14.9,
+      "stockQuantity": 17,
+      "minStock": 10,
+      "active": true,
+      "stockControl": true,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T15:30:26.757Z"
+    },
+    {
+      "id": "prod_soda",
+      "companyId": "company_demo",
+      "categoryId": "cat_drinks",
+      "name": "Coca-Cola 2L",
+      "description": "Garrafa compartilhavel para salao ou delivery.",
+      "imageUrl": "/menu/coca-2l.svg",
+      "price": 13,
+      "stockQuantity": 2,
+      "minStock": 6,
+      "active": true,
+      "stockControl": true,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T15:30:32.087Z"
+    },
+    {
+      "id": "prod_lemonade",
+      "companyId": "company_demo",
+      "categoryId": "cat_drinks",
+      "name": "Limonada da Casa",
+      "description": "Limonada artesanal com hortela.",
+      "imageUrl": "/menu/limonada-casa.svg",
+      "price": 9.5,
+      "stockQuantity": 12,
+      "minStock": 5,
+      "active": true,
+      "stockControl": true,
+      "createdAt": "2026-05-12T12:00:00.000Z",
+      "updatedAt": "2026-05-12T15:30:26.757Z"
+    }
+  ],
+  "productOptions": [
+    {
+      "id": "opt_classic_cheese",
+      "companyId": "company_demo",
+      "productId": "prod_classic",
+      "name": "Queijo extra",
+      "price": 4,
+      "kind": "EXTRA",
+      "active": true
+    },
+    {
+      "id": "opt_classic_bacon",
+      "companyId": "company_demo",
+      "productId": "prod_classic",
+      "name": "Bacon crocante",
+      "price": 6,
+      "kind": "EXTRA",
+      "active": true
+    },
+    {
+      "id": "opt_bacon_onion",
+      "companyId": "company_demo",
+      "productId": "prod_bacon",
+      "name": "Cebola caramelizada",
+      "price": 3.5,
+      "kind": "EXTRA",
+      "active": true
+    },
+    {
+      "id": "opt_bacon_combo",
+      "companyId": "company_demo",
+      "productId": "prod_bacon",
+      "name": "Molho burger",
+      "price": 2.5,
+      "kind": "EXTRA",
+      "active": true
+    },
+    {
+      "id": "opt_veggie_cheddar",
+      "companyId": "company_demo",
+      "productId": "prod_veggie",
+      "name": "Cheddar vegetal",
+      "price": 4.5,
+      "kind": "EXTRA",
+      "active": true
+    },
+    {
+      "id": "opt_fries_large",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "name": "Porcao grande",
+      "price": 7,
+      "kind": "PORTION",
+      "active": true
+    },
+    {
+      "id": "opt_fries_cheddar",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "name": "Cheddar e bacon",
+      "price": 8,
+      "kind": "EXTRA",
+      "active": true
+    },
+    {
+      "id": "opt_soda_cup",
+      "companyId": "company_demo",
+      "productId": "prod_soda",
+      "name": "Copo com gelo",
+      "price": 0,
+      "kind": "EXTRA",
+      "active": true
+    },
+    {
+      "id": "opt_lemonade_large",
+      "companyId": "company_demo",
+      "productId": "prod_lemonade",
+      "name": "Jarra 1L",
+      "price": 12,
+      "kind": "PORTION",
+      "active": true
+    },
+    {
+      "id": "opt_lemonade_mint",
+      "companyId": "company_demo",
+      "productId": "prod_lemonade",
+      "name": "Hortela extra",
+      "price": 1.5,
+      "kind": "EXTRA",
+      "active": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "order_3a1ea15468",
+      "companyId": "company_demo",
+      "code": 109,
+      "type": "RETIRADA",
+      "status": "ENTREGUE",
+      "customerName": "paula",
+      "notes": "sal",
+      "total": 63.8,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T16:11:12.545Z",
+      "updatedAt": "2026-05-12T16:12:43.285Z",
+      "items": [
+        {
+          "productId": "prod_bacon",
+          "productName": "Bacon Smash",
+          "imageUrl": "/menu/bacon-smash.svg",
+          "quantity": 2,
+          "unitPrice": 31.9,
+          "subtotal": 63.8,
+          "selectedOptions": []
+        }
+      ],
+      "saleId": "sale_45c2d03c98"
+    },
+    {
+      "id": "order_2dde29dcfd",
+      "companyId": "company_demo",
+      "code": 108,
+      "type": "BALCAO",
+      "status": "EM_PREPARO",
+      "customerName": "lus",
+      "total": 29.8,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T15:31:26.687Z",
+      "updatedAt": "2026-05-12T16:11:27.299Z",
+      "items": [
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 2,
+          "unitPrice": 14.9,
+          "subtotal": 29.8,
+          "selectedOptions": []
+        }
+      ]
+    },
+    {
+      "id": "order_d2723dd03e",
+      "companyId": "company_demo",
+      "code": 107,
+      "type": "MESA",
+      "status": "NOVO",
+      "customerName": "ana",
+      "tableNumber": "2",
+      "notes": "tras mustarda",
+      "total": 14.9,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:06.146Z",
+      "updatedAt": "2026-05-12T15:30:06.146Z",
+      "items": [
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 1,
+          "unitPrice": 14.9,
+          "subtotal": 14.9,
+          "selectedOptions": []
+        }
+      ]
+    },
+    {
+      "id": "order_4bfe659be0",
+      "companyId": "company_demo",
+      "code": 106,
+      "type": "BALCAO",
+      "status": "ENTREGUE",
+      "customerName": "ghhg",
+      "total": 66.8,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:59:56.401Z",
+      "updatedAt": "2026-05-12T15:30:23.915Z",
+      "items": [
+        {
+          "productId": "prod_lemonade",
+          "productName": "Limonada da Casa",
+          "imageUrl": "/menu/limonada-casa.svg",
+          "quantity": 1,
+          "unitPrice": 9.5,
+          "subtotal": 9.5,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 1,
+          "unitPrice": 14.9,
+          "subtotal": 14.9,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 1,
+          "unitPrice": 14.9,
+          "subtotal": 14.9,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_veggie",
+          "productName": "Veggie Melt",
+          "imageUrl": "/menu/veggie-melt.svg",
+          "quantity": 1,
+          "unitPrice": 27.5,
+          "subtotal": 27.5,
+          "selectedOptions": []
+        }
+      ],
+      "saleId": "sale_e4452f0728"
+    },
+    {
+      "id": "order_c08b9fe39f",
+      "companyId": "company_demo",
+      "code": 105,
+      "type": "BALCAO",
+      "status": "ENTREGUE",
+      "customerName": "ghhg",
+      "total": 39.3,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:59:54.452Z",
+      "updatedAt": "2026-05-12T15:30:26.087Z",
+      "items": [
+        {
+          "productId": "prod_lemonade",
+          "productName": "Limonada da Casa",
+          "imageUrl": "/menu/limonada-casa.svg",
+          "quantity": 1,
+          "unitPrice": 9.5,
+          "subtotal": 9.5,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 1,
+          "unitPrice": 14.9,
+          "subtotal": 14.9,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 1,
+          "unitPrice": 14.9,
+          "subtotal": 14.9,
+          "selectedOptions": []
+        }
+      ],
+      "saleId": "sale_bf07c27e69"
+    },
+    {
+      "id": "order_b13edc4349",
+      "companyId": "company_demo",
+      "code": 104,
+      "type": "BALCAO",
+      "status": "ENTREGUE",
+      "customerName": "ghhg",
+      "total": 24.4,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:59:52.163Z",
+      "updatedAt": "2026-05-12T15:30:26.757Z",
+      "items": [
+        {
+          "productId": "prod_lemonade",
+          "productName": "Limonada da Casa",
+          "imageUrl": "/menu/limonada-casa.svg",
+          "quantity": 1,
+          "unitPrice": 9.5,
+          "subtotal": 9.5,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 1,
+          "unitPrice": 14.9,
+          "subtotal": 14.9,
+          "selectedOptions": []
+        }
+      ],
+      "saleId": "sale_1cf65fc4a9"
+    },
+    {
+      "id": "order_cb84662997",
+      "companyId": "company_demo",
+      "code": 103,
+      "type": "BALCAO",
+      "status": "ENTREGUE",
+      "customerName": "nando",
+      "total": 21.5,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:37:27.971Z",
+      "updatedAt": "2026-05-12T15:28:41.977Z",
+      "items": [
+        {
+          "productId": "prod_lemonade",
+          "productName": "Limonada da Casa",
+          "imageUrl": "/menu/limonada-casa.svg",
+          "quantity": 1,
+          "unitPrice": 21.5,
+          "subtotal": 21.5,
+          "selectedOptions": [
+            {
+              "optionId": "opt_lemonade_large",
+              "name": "Jarra 1L",
+              "price": 12,
+              "kind": "PORTION"
+            }
+          ]
+        }
+      ],
+      "saleId": "sale_3ecc4832c2"
+    },
+    {
+      "id": "order_b5713ea1c4",
+      "companyId": "company_demo",
+      "code": 102,
+      "type": "MESA",
+      "status": "ENTREGUE",
+      "customerName": "lucas",
+      "tableNumber": "1",
+      "total": 13,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:37:06.668Z",
+      "updatedAt": "2026-05-12T15:30:32.087Z",
+      "items": [
+        {
+          "productId": "prod_soda",
+          "productName": "Coca-Cola 2L",
+          "imageUrl": "/menu/coca-2l.svg",
+          "quantity": 1,
+          "unitPrice": 13,
+          "subtotal": 13,
+          "selectedOptions": [
+            {
+              "optionId": "opt_soda_cup",
+              "name": "Copo com gelo",
+              "price": 0,
+              "kind": "EXTRA"
+            }
+          ]
+        }
+      ],
+      "saleId": "sale_fd748f8d98"
+    },
+    {
+      "id": "order_74157c629f",
+      "companyId": "company_demo",
+      "code": 101,
+      "type": "MESA",
+      "status": "ENTREGUE",
+      "customerName": "maria",
+      "tableNumber": "4",
+      "notes": "levar maionese",
+      "total": 93.6,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:03:01.659Z",
+      "updatedAt": "2026-05-12T14:04:16.584Z",
+      "items": [
+        {
+          "productId": "prod_bacon",
+          "productName": "Bacon Smash",
+          "imageUrl": "/menu/bacon-smash.svg",
+          "quantity": 2,
+          "unitPrice": 31.9,
+          "subtotal": 63.8,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_fries",
+          "productName": "Batata Crocante",
+          "imageUrl": "/menu/batata-crocante.svg",
+          "quantity": 2,
+          "unitPrice": 14.9,
+          "subtotal": 29.8,
+          "selectedOptions": []
+        }
+      ],
+      "saleId": "sale_d91717d727"
+    },
+    {
+      "id": "order_9950a64019",
+      "companyId": "company_demo",
+      "code": 100,
+      "type": "RETIRADA",
+      "status": "ENTREGUE",
+      "customerName": "Joao",
+      "total": 87.7,
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T13:47:32.505Z",
+      "updatedAt": "2026-05-12T14:04:15.170Z",
+      "items": [
+        {
+          "productId": "prod_classic",
+          "productName": "Classic Burger",
+          "imageUrl": "/menu/classic-burger.svg",
+          "quantity": 3,
+          "unitPrice": 24.9,
+          "subtotal": 74.7,
+          "selectedOptions": []
+        },
+        {
+          "productId": "prod_soda",
+          "productName": "Coca-Cola 2L",
+          "imageUrl": "/menu/coca-2l.svg",
+          "quantity": 1,
+          "unitPrice": 13,
+          "subtotal": 13,
+          "selectedOptions": []
+        }
+      ],
+      "saleId": "sale_e18f69eb43"
+    }
+  ],
+  "sales": [
+    {
+      "id": "sale_45c2d03c98",
+      "companyId": "company_demo",
+      "orderId": "order_3a1ea15468",
+      "total": 63.8,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T16:12:43.285Z",
+      "paidAt": "2026-05-12T16:12:43.285Z"
+    },
+    {
+      "id": "sale_fd748f8d98",
+      "companyId": "company_demo",
+      "orderId": "order_b5713ea1c4",
+      "total": 13,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:32.087Z",
+      "paidAt": "2026-05-12T15:30:32.087Z"
+    },
+    {
+      "id": "sale_1cf65fc4a9",
+      "companyId": "company_demo",
+      "orderId": "order_b13edc4349",
+      "total": 24.4,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:26.757Z",
+      "paidAt": "2026-05-12T15:30:26.757Z"
+    },
+    {
+      "id": "sale_bf07c27e69",
+      "companyId": "company_demo",
+      "orderId": "order_c08b9fe39f",
+      "total": 39.3,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:26.087Z",
+      "paidAt": "2026-05-12T15:30:26.087Z"
+    },
+    {
+      "id": "sale_e4452f0728",
+      "companyId": "company_demo",
+      "orderId": "order_4bfe659be0",
+      "total": 66.8,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:23.915Z",
+      "paidAt": "2026-05-12T15:30:23.915Z"
+    },
+    {
+      "id": "sale_3ecc4832c2",
+      "companyId": "company_demo",
+      "orderId": "order_cb84662997",
+      "total": 21.5,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T15:28:41.977Z",
+      "paidAt": "2026-05-12T15:28:41.977Z"
+    },
+    {
+      "id": "sale_d91717d727",
+      "companyId": "company_demo",
+      "orderId": "order_74157c629f",
+      "total": 93.6,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:04:16.584Z",
+      "paidAt": "2026-05-12T14:04:16.584Z"
+    },
+    {
+      "id": "sale_e18f69eb43",
+      "companyId": "company_demo",
+      "orderId": "order_9950a64019",
+      "total": 87.7,
+      "discount": 0,
+      "status": "PAGA",
+      "createdById": "user_admin_demo",
+      "createdAt": "2026-05-12T14:04:15.170Z",
+      "paidAt": "2026-05-12T14:04:15.170Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay_d9ec66ff5f",
+      "companyId": "company_demo",
+      "saleId": "sale_45c2d03c98",
+      "orderId": "order_3a1ea15468",
+      "method": "CARTAO_CREDITO",
+      "status": "APROVADO",
+      "amount": 63.8,
+      "createdAt": "2026-05-12T16:12:43.285Z",
+      "paidAt": "2026-05-12T16:12:43.285Z"
+    },
+    {
+      "id": "pay_fc1fcc77f5",
+      "companyId": "company_demo",
+      "saleId": "sale_fd748f8d98",
+      "orderId": "order_b5713ea1c4",
+      "method": "CARTAO_DEBITO",
+      "status": "APROVADO",
+      "amount": 13,
+      "createdAt": "2026-05-12T15:30:32.087Z",
+      "paidAt": "2026-05-12T15:30:32.087Z"
+    },
+    {
+      "id": "pay_499c1a046b",
+      "companyId": "company_demo",
+      "saleId": "sale_1cf65fc4a9",
+      "orderId": "order_b13edc4349",
+      "method": "PIX",
+      "status": "APROVADO",
+      "amount": 24.4,
+      "createdAt": "2026-05-12T15:30:26.757Z",
+      "paidAt": "2026-05-12T15:30:26.757Z"
+    },
+    {
+      "id": "pay_def50d6ad3",
+      "companyId": "company_demo",
+      "saleId": "sale_bf07c27e69",
+      "orderId": "order_c08b9fe39f",
+      "method": "PIX",
+      "status": "APROVADO",
+      "amount": 39.3,
+      "createdAt": "2026-05-12T15:30:26.087Z",
+      "paidAt": "2026-05-12T15:30:26.087Z"
+    },
+    {
+      "id": "pay_5493e4beec",
+      "companyId": "company_demo",
+      "saleId": "sale_e4452f0728",
+      "orderId": "order_4bfe659be0",
+      "method": "PIX",
+      "status": "APROVADO",
+      "amount": 66.8,
+      "createdAt": "2026-05-12T15:30:23.915Z",
+      "paidAt": "2026-05-12T15:30:23.915Z"
+    },
+    {
+      "id": "pay_c3ed740c85",
+      "companyId": "company_demo",
+      "saleId": "sale_3ecc4832c2",
+      "orderId": "order_cb84662997",
+      "method": "CARTAO_CREDITO",
+      "status": "APROVADO",
+      "amount": 21.5,
+      "createdAt": "2026-05-12T15:28:41.977Z",
+      "paidAt": "2026-05-12T15:28:41.977Z"
+    },
+    {
+      "id": "pay_b41969184f",
+      "companyId": "company_demo",
+      "saleId": "sale_d91717d727",
+      "orderId": "order_74157c629f",
+      "method": "PIX",
+      "status": "APROVADO",
+      "amount": 93.6,
+      "createdAt": "2026-05-12T14:04:16.584Z",
+      "paidAt": "2026-05-12T14:04:16.584Z"
+    },
+    {
+      "id": "pay_3b450346e2",
+      "companyId": "company_demo",
+      "saleId": "sale_e18f69eb43",
+      "orderId": "order_9950a64019",
+      "method": "PIX",
+      "status": "APROVADO",
+      "amount": 87.7,
+      "createdAt": "2026-05-12T14:04:15.170Z",
+      "paidAt": "2026-05-12T14:04:15.170Z"
+    }
+  ],
+  "stockMovements": [
+    {
+      "id": "stock_7df1cde65c",
+      "companyId": "company_demo",
+      "productId": "prod_bacon",
+      "productName": "Bacon Smash",
+      "quantity": 2,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #109",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T16:12:43.285Z"
+    },
+    {
+      "id": "stock_ddba8465a5",
+      "companyId": "company_demo",
+      "productId": "prod_soda",
+      "productName": "Coca-Cola 2L",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #102",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:32.087Z"
+    },
+    {
+      "id": "stock_224fc68bf6",
+      "companyId": "company_demo",
+      "productId": "prod_lemonade",
+      "productName": "Limonada da Casa",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #104",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:26.757Z"
+    },
+    {
+      "id": "stock_6d0d178bf5",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "productName": "Batata Crocante",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #104",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:26.757Z"
+    },
+    {
+      "id": "stock_1713513b92",
+      "companyId": "company_demo",
+      "productId": "prod_lemonade",
+      "productName": "Limonada da Casa",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #105",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:26.087Z"
+    },
+    {
+      "id": "stock_f22d0d4ced",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "productName": "Batata Crocante",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #105",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:26.087Z"
+    },
+    {
+      "id": "stock_dbda26bfe5",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "productName": "Batata Crocante",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #105",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:26.087Z"
+    },
+    {
+      "id": "stock_e31e5e2c27",
+      "companyId": "company_demo",
+      "productId": "prod_lemonade",
+      "productName": "Limonada da Casa",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #106",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:23.915Z"
+    },
+    {
+      "id": "stock_5dca62e556",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "productName": "Batata Crocante",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #106",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:23.915Z"
+    },
+    {
+      "id": "stock_4c6412a2b4",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "productName": "Batata Crocante",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #106",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:23.915Z"
+    },
+    {
+      "id": "stock_4d00d4ad39",
+      "companyId": "company_demo",
+      "productId": "prod_veggie",
+      "productName": "Veggie Melt",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #106",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:30:23.915Z"
+    },
+    {
+      "id": "stock_2a0a05a422",
+      "companyId": "company_demo",
+      "productId": "prod_lemonade",
+      "productName": "Limonada da Casa",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #103",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T15:28:41.977Z"
+    },
+    {
+      "id": "stock_39c96a7c40",
+      "companyId": "company_demo",
+      "productId": "prod_bacon",
+      "productName": "Bacon Smash",
+      "quantity": 2,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #101",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T14:04:16.584Z"
+    },
+    {
+      "id": "stock_9b777849eb",
+      "companyId": "company_demo",
+      "productId": "prod_fries",
+      "productName": "Batata Crocante",
+      "quantity": 2,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #101",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T14:04:16.584Z"
+    },
+    {
+      "id": "stock_659e3cc613",
+      "companyId": "company_demo",
+      "productId": "prod_classic",
+      "productName": "Classic Burger",
+      "quantity": 3,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #100",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T14:04:15.170Z"
+    },
+    {
+      "id": "stock_8d4c1abee1",
+      "companyId": "company_demo",
+      "productId": "prod_soda",
+      "productName": "Coca-Cola 2L",
+      "quantity": 1,
+      "type": "SAIDA",
+      "reason": "Baixa automatica do pedido #100",
+      "userId": "user_admin_demo",
+      "createdAt": "2026-05-12T14:04:15.170Z"
+    }
+  ]
+}
