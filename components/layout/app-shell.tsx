@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { appModules } from "@/features/core/demo-data";
+import { LogoutButton } from "@/components/layout/logout-button";
 import type { SessionUser } from "@/types/domain";
 
 type AppShellProps = {
@@ -48,10 +49,17 @@ export function AppShell({
                 {user.role}
               </p>
             </div>
+            <LogoutButton />
           </div>
 
           <nav className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 lg:mx-0 lg:grid lg:grid-cols-1 lg:overflow-visible lg:px-0 lg:pb-0">
-            {appModules.map((module) => {
+            {appModules
+              .filter(
+                (m) =>
+                  m.allowedRoles === "all" ||
+                  m.allowedRoles.includes(user.role),
+              )
+              .map((module) => {
               const active = currentPath.startsWith(module.href);
 
               return (

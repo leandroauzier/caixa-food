@@ -1,13 +1,11 @@
 import { KitchenColumn } from "@/components/cozinha/kitchen-column";
 import { AppShell } from "@/components/layout/app-shell";
 import { getKitchenBoard } from "@/features/orders/dal";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 
 export default async function KitchenPage() {
-  const user = await getCurrentUser();
+  const user = await requireRoles(["SUPERADMIN", "ADMIN", "COZINHA"]);
   const board = await getKitchenBoard();
-
-  if (!user) return null;
 
   return (
     <AppShell

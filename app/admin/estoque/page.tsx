@@ -3,16 +3,14 @@ import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
 import { getProductSummaries } from "@/features/catalog/dal";
 import { getDashboardOverview } from "@/features/dashboard/dal";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 
 export default async function AdminStockPage() {
-  const user = await getCurrentUser();
+  const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
   const [overview, products] = await Promise.all([
     getDashboardOverview(),
     getProductSummaries(),
   ]);
-
-  if (!user) return null;
 
   return (
     <AppShell

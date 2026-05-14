@@ -61,7 +61,7 @@ export async function createOrderAction(
   _previousState: OrderFormState,
   formData: FormData,
 ): Promise<OrderFormState> {
-  const user = await requireRoles(["ADMIN", "CAIXA", "ATENDENTE"]);
+  const user = await requireRoles(["SUPERADMIN", "ADMIN", "CAIXA", "ATENDENTE"]);
   const parsed = createOrderSchema.safeParse({
     customerName: formData.get("customerName"),
     type: formData.get("type"),
@@ -113,7 +113,7 @@ export async function registerPaymentAction(
   _previousState: PaymentFormState,
   formData: FormData,
 ): Promise<PaymentFormState> {
-  const user = await requireRoles(["ADMIN", "CAIXA"]);
+  const user = await requireRoles(["SUPERADMIN", "ADMIN", "CAIXA"]);
   const parsed = paymentSchema.safeParse({
     orderId: formData.get("orderId"),
     amount: formData.get("amount"),

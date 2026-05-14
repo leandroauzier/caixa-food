@@ -2,13 +2,11 @@ import { CategoryQuickForm } from "@/components/admin/category-quick-form";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
 import { getCategorySummaries } from "@/features/catalog/dal";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 
 export default async function AdminCategoriesPage() {
-  const user = await getCurrentUser();
+  const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
   const categoryItems = await getCategorySummaries();
-
-  if (!user) return null;
 
   return (
     <AppShell

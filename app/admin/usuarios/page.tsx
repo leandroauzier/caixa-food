@@ -1,11 +1,9 @@
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 
 export default async function AdminUsersPage() {
-  const user = await getCurrentUser();
-
-  if (!user) return null;
+  const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
 
   const roles = [
     {

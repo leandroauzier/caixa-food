@@ -1,14 +1,12 @@
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
 import { StatCard } from "@/components/ui/stat-card";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 import { getDashboardOverview } from "@/features/dashboard/dal";
 
 export default async function AdminPage() {
-  const user = await getCurrentUser();
+  const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
   const overview = await getDashboardOverview();
-
-  if (!user) return null;
 
   return (
     <AppShell

@@ -13,6 +13,18 @@ export type Permission =
   | "viewMenu";
 
 const rolePermissions: Record<Role, Permission[]> = {
+  SUPERADMIN: [
+    "viewAdmin",
+    "manageCatalog",
+    "manageStock",
+    "manageUsers",
+    "viewReports",
+    "configureCompany",
+    "operatePdv",
+    "manageKitchen",
+    "createOrders",
+    "viewMenu",
+  ],
   ADMIN: [
     "viewAdmin",
     "manageCatalog",

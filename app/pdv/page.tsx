@@ -4,13 +4,11 @@ import { OrderSummaryCard } from "@/components/pdv/order-summary";
 import { PaymentOrderForm } from "@/components/pdv/payment-order-form";
 import { SectionCard } from "@/components/ui/section-card";
 import { getPdvContext } from "@/features/orders/dal";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 
 export default async function PdvPage() {
-  const user = await getCurrentUser();
+  const user = await requireRoles(["SUPERADMIN", "ADMIN", "CAIXA", "ATENDENTE"]);
   const context = await getPdvContext();
-
-  if (!user) return null;
 
   return (
     <AppShell

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\leandro.sobrinho\\\\Desktop\\\\projeto-pessoal\\\\caixa-food\" -Recurse | ForEach-Object { $_.FullName })",
+      "Bash(node -e \"const {z} = require\\('zod'\\); console.log\\(typeof z.email\\)\")",
+      "Bash(rtk tsc *)",
+      "Bash(rtk grep *)",
+      "Bash(Set-Content -Path 'c:\\\\Users\\\\leandro.sobrinho\\\\Desktop\\\\projeto-pessoal\\\\caixa-food\\\\lib\\\\slugify.ts' -Encoding utf8 -Value '@ *)",
+      "Bash(node -e ' *)",
+      "Bash(rtk prisma *)",
+      "Bash(node_modules/.bin/prisma db *)",
+      "Bash(rtk ls *)",
+      "Bash(pnpm add *)"
+    ]
+  }
+}

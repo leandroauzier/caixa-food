@@ -3,16 +3,14 @@ import { ProductTable } from "@/components/admin/product-table";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
 import { getCategorySummaries, getProductSummaries } from "@/features/catalog/dal";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 
 export default async function AdminProductsPage() {
-  const user = await getCurrentUser();
+  const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
   const [categoryItems, productItems] = await Promise.all([
     getCategorySummaries(),
     getProductSummaries(),
   ]);
-
-  if (!user) return null;
 
   return (
     <AppShell

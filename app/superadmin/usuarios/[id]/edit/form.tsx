@@ -1,0 +1,73 @@
+"use client";
+
+import { useActionState } from "react";
+
+import {
+  updateUserAction,
+  type UpdateUserState,
+} from "../../actions/update-user";
+import type { SuperadminUser } from "@/features/superadmin/dal";
+
+const initial: UpdateUserState = {};
+
+const input =
+  "w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200";
+
+export function EditUserForm({ user }: { user: SuperadminUser }) {
+  const [state, action] = useActionState(updateUserAction, initial);
+
+  return (
+    <form action={action} className="space-y-4">
+      <input type="hidden" name="id" value={user.id} />
+      {state.error && (
+        <p className="rounded-xl bg-red-50 px-4 py-2.5 text-sm text-red-600">
+          {state.error}
+        </p>
+      )}
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+            Nome
+          </label>
+          <input
+            name="name"
+            required
+            minLength={2}
+            defaultValue={user.name}
+            className={input}
+          />
+        </div>
+        <div>
+          <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+            Email
+          </label>
+          <input
+            name="email"
+            type="email"
+            required
+            defaultValue={user.email}
+            className={input}
+          />
+        </div>
+        <div>
+          <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+            Role
+          </label>
+          <select name="role" required defaultValue={user.role} className={input}>
+            {(["ADMIN", "CAIXA", "COZINHA", "ATENDENTE"] as const).map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <button
+        type="submit"
+        className="inline-flex h-10 items-center rounded-full bg-slate-950 px-5 text-xs font-semibold text-white transition hover:bg-slate-800"
+      >
+        Salvar alterações
+      </button>
+    </form>
+  );
+}

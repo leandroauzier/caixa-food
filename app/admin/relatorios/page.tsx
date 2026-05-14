@@ -2,16 +2,14 @@ import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
 import { getDashboardOverview } from "@/features/dashboard/dal";
 import { getReportCards } from "@/features/reports/dal";
-import { getCurrentUser } from "@/lib/auth";
+import { requireRoles } from "@/lib/auth";
 
 export default async function AdminReportsPage() {
-  const user = await getCurrentUser();
+  const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
   const [reportItems, overview] = await Promise.all([
     getReportCards(),
     getDashboardOverview(),
   ]);
-
-  if (!user) return null;
 
   return (
     <AppShell

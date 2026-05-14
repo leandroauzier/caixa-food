@@ -1,56 +1,86 @@
-import { SectionCard } from "@/components/ui/section-card";
-import { demoSessionUser } from "@/features/core/demo-data";
+"use client";
+
+import { useActionState } from "react";
+
+import { loginAction, type LoginState } from "./actions";
+
+const initialState: LoginState = {};
 
 export default function LoginPage() {
+  const [state, action] = useActionState(loginAction, initialState);
+
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.96),_rgba(226,232,240,0.88),_rgba(191,219,254,0.62))] px-4 py-12">
-      <div className="mx-auto max-w-5xl space-y-6">
-        <header className="rounded-[36px] border border-white/70 bg-white/85 p-8 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.96),_rgba(226,232,240,0.88),_rgba(191,219,254,0.62))] px-4">
+      <div className="w-full max-w-sm space-y-6">
+        <div className="text-center">
           <p className="text-xs uppercase tracking-[0.34em] text-slate-500">
-            Autenticação e autorização
+            Caixa Food
           </p>
-          <h1 className="mt-3 font-heading text-4xl text-slate-950">
-            Fluxo preparado para sessão assinada e roles por ação.
+          <h1 className="mt-2 font-heading text-3xl text-slate-950">
+            Entrar
           </h1>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
-            Nesta base, as páginas funcionam em `DEMO_MODE`, mas já existe
-            infraestrutura para cookie de sessão assinado, verificação por role,
-            validação server-side e isolamento multiempresa.
-          </p>
-        </header>
-
-        <div className="grid gap-6 lg:grid-cols-2">
-          <SectionCard
-            title="Sessão demo"
-            description="Usada para navegar no MVP sem depender de banco logo no primeiro passo."
-          >
-            <div className="space-y-3 text-sm text-slate-700">
-              <p>
-                Usuário atual: <strong>{demoSessionUser.name}</strong>
-              </p>
-              <p>
-                Empresa: <strong>{demoSessionUser.companyName}</strong>
-              </p>
-              <p>
-                Role: <strong>{demoSessionUser.role}</strong>
-              </p>
-            </div>
-          </SectionCard>
-
-          <SectionCard
-            title="Checklist de endurecimento"
-            description="Pontos importantes para reduzir CSRF, IDOR, vazamento de dados e erros de autorização."
-          >
-            <ul className="space-y-3 text-sm leading-7 text-slate-700">
-              <li>Revalidar autenticação dentro de cada Server Action.</li>
-              <li>Checar ownership e `companyId` em toda mutação de recurso.</li>
-              <li>Guardar senha com Argon2id em vez de hash simplificado.</li>
-              <li>Retornar DTOs mínimos, nunca registros crus do Prisma.</li>
-              <li>Manter segredos apenas na camada server-only.</li>
-            </ul>
-          </SectionCard>
         </div>
+
+        <form
+          action={action}
+          className="rounded-[28px] border border-white/70 bg-white/85 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur space-y-4"
+        >
+          {state.error && (
+            <p className="rounded-xl bg-red-50 px-4 py-2.5 text-sm text-red-600">
+              {state.error}
+            </p>
+          )}
+
+          <div className="space-y-1.5">
+            <label
+              htmlFor="email"
+              className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label
+              htmlFor="password"
+              className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500"
+            >
+              Senha
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              autoComplete="current-password"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <LoginButton />
+        </form>
       </div>
     </div>
+  );
+}
+
+function LoginButton() {
+  return (
+    <button
+      type="submit"
+      className="w-full rounded-full bg-slate-950 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+    >
+      Entrar
+    </button>
   );
 }

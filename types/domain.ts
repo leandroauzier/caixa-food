@@ -1,4 +1,4 @@
-export const roles = ["ADMIN", "CAIXA", "COZINHA", "ATENDENTE"] as const;
+export const roles = ["SUPERADMIN", "ADMIN", "CAIXA", "COZINHA", "ATENDENTE"] as const;
 export type Role = (typeof roles)[number];
 
 export const orderTypes = ["BALCAO", "MESA", "DELIVERY", "RETIRADA"] as const;
@@ -107,6 +107,7 @@ export type AppModule = {
   description: string;
   href: string;
   accent: string;
+  allowedRoles: Role[] | "all";
 };
 
 export type ProductOptionKind = "EXTRA" | "PORTION";

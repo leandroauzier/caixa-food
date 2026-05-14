@@ -29,7 +29,8 @@ As dependências extras ficaram focadas no que é estrutural:
 
 1. Copie `.env.example` para `.env`
 2. Ajuste `DATABASE_URL`
-3. Gere o client do Prisma:
+3. Gere um session secret com o comando: `openssl rand -base64 32`
+4. Gere o client do Prisma:
 
 ```bash
 pnpm prisma generate
