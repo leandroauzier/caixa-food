@@ -14,6 +14,10 @@ export function MenuList({
       {categories.map((category) => {
         const categoryProducts = products.filter(
           (product) => product.categoryId === category.id,
+        ).sort(
+          (left, right) =>
+            (left.sortOrder ?? 0) - (right.sortOrder ?? 0) ||
+            left.name.localeCompare(right.name),
         );
 
         return (

@@ -23,8 +23,16 @@ export function CreateUserForm() {
           {state.error}
         </p>
       )}
+      {state.success && (
+        <p className="rounded-xl bg-emerald-50 px-4 py-2.5 text-sm text-emerald-700">
+          {state.success}
+        </p>
+      )}
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field label="Role">
+        <Field label="Nome">
+          <input name="name" required minLength={2} className={input} />
+        </Field>
+        <Field label="Cargo">
           <select name="role" required className={input}>
             {(["CAIXA", "COZINHA", "ATENDENTE"] as const).map((role) => (
               <option key={role} value={role}>
@@ -33,22 +41,14 @@ export function CreateUserForm() {
             ))}
           </select>
         </Field>
-        <Field label="Nome">
-          <input name="name" required minLength={2} className={input} />
-        </Field>
         <Field label="Email">
           <input name="email" type="email" required className={input} />
         </Field>
-        <Field label="Senha inicial">
-          <input
-            name="password"
-            type="password"
-            required
-            minLength={8}
-            className={input}
-          />
-        </Field>
       </div>
+      <p className="text-xs leading-5 text-slate-500">
+        A senha inicial será gerada automaticamente com 8 dígitos e enviada por
+        e-mail.
+      </p>
       <Btn>Criar usuário</Btn>
     </form>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { GripVertical, Loader2 } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 
@@ -9,9 +10,14 @@ import type { ProductSummary } from "@/types/domain";
 type ProductTableProps = {
   products: ProductSummary[];
   onOrderChange?: (productIds: string[]) => Promise<void> | void;
+  editHrefBase?: string;
 };
 
-export function ProductTable({ products, onOrderChange }: ProductTableProps) {
+export function ProductTable({
+  products,
+  onOrderChange,
+  editHrefBase,
+}: ProductTableProps) {
   const [orderedProducts, setOrderedProducts] = useState(products);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -63,13 +69,18 @@ export function ProductTable({ products, onOrderChange }: ProductTableProps) {
         <table className="min-w-full divide-y divide-slate-200 text-sm">
           <thead className="bg-slate-50 text-left text-slate-500">
             <tr>
-              {onOrderChange ? <th className="w-12 px-4 py-3 font-medium"> </th> : null}
+              {onOrderChange ? (
+                <th className="w-12 px-4 py-3 font-medium"> </th>
+              ) : null}
               <th className="px-4 py-3 font-medium">Imagem</th>
               <th className="px-4 py-3 font-medium">Produto</th>
               <th className="px-4 py-3 font-medium">Categoria</th>
               <th className="px-4 py-3 font-medium">Preço</th>
               <th className="px-4 py-3 font-medium">Estoque</th>
               <th className="px-4 py-3 font-medium">Status</th>
+              {editHrefBase ? (
+                <th className="px-4 py-3 font-medium">Ações</th>
+              ) : null}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -139,6 +150,16 @@ export function ProductTable({ products, onOrderChange }: ProductTableProps) {
                         : "Inativo"}
                   </span>
                 </td>
+                {editHrefBase ? (
+                  <td className="px-4 py-4 align-middle">
+                    <Link
+                      href={`${editHrefBase}/${product.id}/edit`}
+                      className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-400"
+                    >
+                      Editar
+                    </Link>
+                  </td>
+                ) : null}
               </tr>
             ))}
           </tbody>

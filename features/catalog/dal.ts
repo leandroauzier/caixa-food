@@ -124,6 +124,52 @@ export async function getProductSummaries() {
   return loadProducts(user.companyId);
 }
 
+export async function getProductById(companyId: string, id: string) {
+  if (!process.env.DATABASE_URL || process.env.DEMO_MODE !== "false") {
+    const store = await readAppStore();
+    const product = store.products.find(
+      (item) => item.companyId === companyId && item.id === id,
+    );
+    if (!product) {
+      return null;
+    }
+
+    const category = store.categories.find(
+      (item) => item.id === product.categoryId && item.companyId === companyId,
+    );
+
+    return toProductSummary(
+      product,
+      category,
+      store.productOptions.filter((option) => option.productId === product.id),
+    );
+  }
+
+  const product = await prisma.product.findFirst({
+    where: { id, companyId },
+    include: { category: true },
+  });
+
+  if (!product) {
+    return null;
+  }
+
+  return {
+    id: product.id,
+    categoryId: product.categoryId,
+    categoryName: product.category.name,
+    name: product.name,
+    description: product.description ?? "Sem descricao.",
+    imageUrl: product.imageUrl ?? "/menu/classic-burger.svg",
+    price: Number(product.price),
+    stockQuantity: product.stockQuantity,
+    minStock: product.minStock,
+    active: product.active,
+    sortOrder: product.sortOrder ?? 0,
+    options: [],
+  };
+}
+
 export async function getPublicMenuCatalog() {
   const [categoryItems, productItems] = await Promise.all([
     loadCategories(),
@@ -131,8 +177,20 @@ export async function getPublicMenuCatalog() {
   ]);
 
   return {
-    categories: categoryItems.filter((category) => category.active),
-    products: productItems.filter((product) => product.active),
+    categories: categoryItems
+      .filter((category) => category.active)
+      .sort(
+        (left, right) =>
+          (left.sortOrder ?? 0) - (right.sortOrder ?? 0) ||
+          left.name.localeCompare(right.name),
+      ),
+    products: productItems
+      .filter((product) => product.active)
+      .sort(
+        (left, right) =>
+          (left.sortOrder ?? 0) - (right.sortOrder ?? 0) ||
+          left.name.localeCompare(right.name),
+      ),
   };
 }
 
@@ -346,6 +404,114 @@ export async function createProductRecord(input: {
     return {
       persisted: true,
       message: `Produto ${product.name} criado com sucesso.`,
+    };
+  } catch {
+    return {
+      persisted: false,
+      message: "Nao foi possivel salvar no banco agora. Revise a conexao do Prisma.",
+    };
+  }
+}
+
+export async function updateProductRecord(input: {
+  companyId: string;
+  id: string;
+  categoryId: string;
+  name: string;
+  description?: string;
+  imageUrl?: string;
+  price: number;
+  stockQuantity: number;
+  minStock: number;
+}) {
+  if (!process.env.DATABASE_URL || process.env.DEMO_MODE !== "false") {
+    const timestamp = new Date().toISOString();
+    const store = await readAppStore();
+    const index = store.products.findIndex(
+      (product) => product.id === input.id && product.companyId === input.companyId,
+    );
+
+    if (index < 0) {
+      return { persisted: false, message: "Produto nao encontrado." };
+    }
+
+    const categoryExists = store.categories.some(
+      (category) =>
+        category.id === input.categoryId && category.companyId === input.companyId,
+    );
+
+    if (!categoryExists) {
+      return {
+        persisted: false,
+        message: "Categoria invalida para este produto.",
+      };
+    }
+
+    await updateAppStore((currentStore) => {
+      const products = [...currentStore.products];
+      products[index] = {
+        ...products[index],
+        categoryId: input.categoryId,
+        name: input.name,
+        description: input.description || "Sem descricao.",
+        imageUrl: input.imageUrl || products[index].imageUrl,
+        price: input.price,
+        stockQuantity: input.stockQuantity,
+        minStock: input.minStock,
+        updatedAt: timestamp,
+      };
+
+      return {
+        ...currentStore,
+        products,
+      };
+    });
+
+    return { persisted: true, message: `Produto ${input.name} atualizado com sucesso.` };
+  }
+
+  try {
+    const category = await prisma.category.findFirst({
+      where: {
+        id: input.categoryId,
+        companyId: input.companyId,
+      },
+    });
+
+    if (!category) {
+      return {
+        persisted: false,
+        message: "Categoria invalida para este produto.",
+      };
+    }
+
+    const product = await prisma.product.findFirst({
+      where: { id: input.id, companyId: input.companyId },
+    });
+
+    if (!product) {
+      return {
+        persisted: false,
+        message: "Produto nao encontrado.",
+      };
+    }
+
+    await prisma.product.update({
+      where: { id: product.id },
+      data: {
+        categoryId: input.categoryId,
+        name: input.name,
+        description: input.description || null,
+        imageUrl: input.imageUrl || product.imageUrl,
+        price: new Prisma.Decimal(input.price),
+        stockQuantity: input.stockQuantity,
+        minStock: input.minStock,
+      },
+    });
+
+    return {
+      persisted: true,
+      message: `Produto ${input.name} atualizado com sucesso.`,
     };
   } catch {
     return {
