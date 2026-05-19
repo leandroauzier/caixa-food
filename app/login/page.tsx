@@ -63,7 +63,7 @@ export default function LoginPage() {
               required
               autoComplete="current-password"
               className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
-              placeholder="••••••••"
+              placeholder="Sua Senha"
             />
           </div>
 

@@ -165,6 +165,7 @@ model Product {
   stockControl  Boolean           @default(true)
   stockQuantity Int               @default(0)
   minStock      Int               @default(0)
+  sortOrder     Int               @default(0)
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
   company       Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -176,6 +177,7 @@ model Product {
 
   @@unique([companyId, name])
   @@index([companyId, categoryId, active])
+  @@index([companyId, active, sortOrder])
 }
 
 model ProductOption {

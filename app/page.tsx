@@ -1,104 +1,114 @@
 import Link from "next/link";
+import {
+  BadgeCheck,
+  ClipboardList,
+  CreditCard,
+  LockKeyhole,
+  Utensils,
+} from "lucide-react";
 
-import { ModuleCard } from "@/components/dashboard/module-card";
 import { SectionCard } from "@/components/ui/section-card";
 import { StatCard } from "@/components/ui/stat-card";
-import { getVisibleAppModules } from "@/features/core/app-modules";
 import { dashboardMetrics } from "@/features/core/dashboard-metrics";
 import { getCurrentUser } from "@/lib/auth";
 
+const operationBenefits = [
+  {
+    icon: ClipboardList,
+    title: "Pedidos organizados",
+    description: "Acompanhe cada pedido desde o atendimento até a cozinha.",
+  },
+  {
+    icon: CreditCard,
+    title: "Controle de caixa",
+    description: "Registre vendas, pagamentos e movimentações do dia.",
+  },
+  {
+    icon: Utensils,
+    title: "Cardápio centralizado",
+    description: "Mantenha produtos, preços e disponibilidade sempre atualizados.",
+  },
+  {
+    icon: LockKeyhole,
+    title: "Acesso por função",
+    description: "Cada colaborador acessa apenas as áreas liberadas para seu perfil.",
+  },
+];
+
 export default async function Home() {
   const user = await getCurrentUser();
-  const visibleModules = getVisibleAppModules(user?.role);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.98),_rgba(226,232,240,0.92),_rgba(254,240,138,0.55))] px-4 py-10">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(248,250,252,1),_rgba(226,232,240,0.95),_rgba(186,230,253,0.45))] px-4 py-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-8">
         <header className="rounded-[36px] border border-white/70 bg-slate-950 px-8 py-10 text-white shadow-2xl">
-          <p className="text-xs uppercase tracking-[0.36em] text-slate-400">
-            MVP para operação de loja de comida
-          </p>
-          <h1 className="mt-4 max-w-4xl font-heading text-5xl leading-tight">
-            Base fullstack preparada para Admin, PDV, Cozinha e Cardápio.
+          <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-200">
+            <BadgeCheck className="h-4 w-4" />
+            Sistema de gestão para alimentação
+          </div>
+
+          <h1 className="mt-5 max-w-4xl font-heading text-5xl leading-tight">
+            CAIXA FOOD
           </h1>
-          <p className="mt-5 max-w-3xl text-sm leading-7 text-slate-300">
-            A estrutura já nasce separando UI, DAL server-only, permissões por
-            role, multiempresa por `companyId` e schema Prisma para evoluir sem
-            retrabalho.
+
+          <p className="mt-5 max-w-3xl text-base leading-7 text-slate-200">
+            Controle pedidos, caixa, cozinha, cardápio e usuários em um único
+            sistema. Cada colaborador acessa apenas as áreas necessárias para a
+            sua função.
           </p>
+
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/admin"
-              className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950"
-            >
-              Abrir painel admin
-            </Link>
-            <Link
-              href="/login"
-              className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white"
-            >
-              Ver fluxo de autenticação
-            </Link>
+            {user ? (
+              <Link
+                href={user.role === "SUPERADMIN" ? "/superadmin" : "/admin"}
+                className="rounded-full bg-sky-400 px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-sky-950/20 transition hover:bg-sky-300"
+              >
+                Abrir painel
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="rounded-full bg-sky-400 px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-sky-950/20 transition hover:bg-sky-300"
+              >
+                Entrar no sistema
+              </Link>
+            )}
           </div>
         </header>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {/* <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {dashboardMetrics.map((metric) => (
             <StatCard key={metric.label} {...metric} />
           ))}
-        </div>
+        </div> */}
 
         <SectionCard
-          title="Módulos do sistema"
-          description={
-            user
-              ? "Cada área tem responsabilidade própria e os blocos aparecem conforme a sua role."
-              : "Entre para ver os módulos liberados para a sua conta."
-          }
-        >
-          {visibleModules.length > 0 ? (
-            <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
-              {visibleModules.map((module) => (
-                <ModuleCard key={module.href} module={module} />
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-[24px] border border-slate-200 bg-slate-50 p-6">
-              <p className="text-sm font-semibold text-slate-950">
-                Entre com uma conta autorizada para liberar os módulos.
-              </p>
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                A home continua aberta, mas os acessos ficam condicionados ao
-                `userRole` real vindo da sessão.
-              </p>
-              <Link
-                href="/login"
-                className="mt-4 inline-flex rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white"
-              >
-                Ir para login
-              </Link>
-            </div>
-          )}
-        </SectionCard>
-
-        <SectionCard
-          title="Decisões de segurança"
-          description="A base já foi pensada para reduzir os problemas mais comuns antes de chegar em produção."
+          title="Como o sistema ajuda sua operação"
+          description="Recursos pensados para reduzir erros, organizar a equipe e melhorar o controle diário da loja."
         >
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {[
-              "DAL server-only para evitar acesso direto do cliente ao banco.",
-              "Permissões por role verificadas no servidor, não apenas na UI.",
-              "Validação com Zod em formulários e Server Actions.",
-              "Schema multiempresa para filtrar tudo por companyId.",
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-[24px] border border-slate-200 bg-slate-50 p-5 text-sm leading-7 text-slate-700"
-              >
-                {item}
-              </div>
-            ))}
+            {operationBenefits.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-md"
+                >
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-50 text-sky-700">
+                    <Icon className="h-5 w-5" />
+                  </div>
+
+                  <p className="text-sm font-bold text-slate-950">
+                    {item.title}
+                  </p>
+
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </SectionCard>
       </div>

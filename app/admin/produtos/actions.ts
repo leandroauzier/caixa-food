@@ -2,7 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 
-import { createProductRecord } from "@/features/catalog/dal";
+import {
+  createProductRecord,
+  reorderProductsRecord,
+} from "@/features/catalog/dal";
 import { requirePermission } from "@/lib/auth";
 import { productSchema } from "@/lib/validations";
 
@@ -13,6 +16,7 @@ export type ProductFormState = {
     name?: string[];
     description?: string[];
     categoryId?: string[];
+    imageUrl?: string[];
     price?: string[];
     stockQuantity?: string[];
     minStock?: string[];
@@ -29,6 +33,7 @@ export async function createProductAction(
     name: formData.get("name"),
     description: formData.get("description"),
     categoryId: formData.get("categoryId"),
+    imageUrl: formData.get("imageUrl"),
     price: formData.get("price"),
     stockQuantity: formData.get("stockQuantity"),
     minStock: formData.get("minStock"),
@@ -55,3 +60,13 @@ export async function createProductAction(
   };
 }
 
+export async function reorderProductsAction(productIds: string[]) {
+  const user = await requirePermission("manageCatalog");
+  await reorderProductsRecord({
+    companyId: user.companyId,
+    productIds,
+  });
+
+  revalidatePath("/admin/produtos");
+  revalidatePath("/cardapio");
+}

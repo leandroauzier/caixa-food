@@ -2,7 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 
-import { createCategoryRecord } from "@/features/catalog/dal";
+import {
+  createCategoryRecord,
+  reorderCategoriesRecord,
+} from "@/features/catalog/dal";
 import { requirePermission } from "@/lib/auth";
 import { categorySchema } from "@/lib/validations";
 
@@ -48,3 +51,14 @@ export async function createCategoryAction(
   };
 }
 
+export async function reorderCategoriesAction(categoryIds: string[]) {
+  const user = await requirePermission("manageCatalog");
+  await reorderCategoriesRecord({
+    companyId: user.companyId,
+    categoryIds,
+  });
+
+  revalidatePath("/admin/categorias");
+  revalidatePath("/admin/produtos");
+  revalidatePath("/cardapio");
+}

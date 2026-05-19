@@ -41,6 +41,7 @@ export type SuperadminCategory = {
   companyId: string;
   companyName: string;
   productCount: number;
+  sortOrder: number;
 };
 
 export async function getSuperadminStats(): Promise<SuperadminStats> {
@@ -138,7 +139,7 @@ export async function getAllCategoriesGlobal(): Promise<SuperadminCategory[]> {
       company: { select: { name: true } },
       _count: { select: { products: true } },
     },
-    orderBy: [{ company: { name: "asc" } }, { name: "asc" }],
+    orderBy: [{ company: { name: "asc" } }, { sortOrder: "asc" }, { name: "asc" }],
   });
 
   return cats.map((c) => ({
@@ -149,6 +150,7 @@ export async function getAllCategoriesGlobal(): Promise<SuperadminCategory[]> {
     companyId: c.companyId,
     companyName: c.company.name,
     productCount: c._count.products,
+    sortOrder: c.sortOrder ?? 0,
   }));
 }
 

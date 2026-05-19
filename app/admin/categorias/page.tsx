@@ -1,8 +1,10 @@
 import { CategoryQuickForm } from "@/components/admin/category-quick-form";
+import { CategoryTable } from "@/components/admin/category-table";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
 import { getCategorySummaries } from "@/features/catalog/dal";
 import { requireRoles } from "@/lib/auth";
+import { reorderCategoriesAction } from "./actions";
 
 export default async function AdminCategoriesPage() {
   const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
@@ -24,28 +26,12 @@ export default async function AdminCategoriesPage() {
 
       <SectionCard
         title="Mapa de categorias"
-        description="Cada categoria fica preparada para ordenacao, ativacao e compartilhamento com o cardapio."
+        description="Arraste para mudar a ordem das categorias usadas no cardápio e nos produtos."
       >
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {categoryItems.map((category) => (
-            <article
-              key={category.id}
-              className="rounded-[24px] border border-slate-200 bg-white p-5"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="font-semibold text-slate-950">{category.name}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    {category.description}
-                  </p>
-                </div>
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                  {category.productCount} itens
-                </span>
-              </div>
-            </article>
-          ))}
-        </div>
+        <CategoryTable
+          categories={categoryItems}
+          onOrderChange={reorderCategoriesAction}
+        />
       </SectionCard>
     </AppShell>
   );

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { verifyPassword } from "@/lib/password";
 import { prisma } from "@/lib/prisma";
 import { COOKIE_NAME, encryptSession } from "@/lib/session";
+import { getRoleHomeHref } from "@/features/core/app-modules";
 import type { SessionUser } from "@/types/domain";
 
 const loginSchema = z.object({
@@ -64,5 +65,5 @@ export async function loginAction(
     maxAge: 60 * 60 * 24 * 7,
   });
 
-  redirect("/");
+  redirect(getRoleHomeHref(sessionUser.role));
 }

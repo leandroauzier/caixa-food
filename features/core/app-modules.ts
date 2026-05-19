@@ -60,3 +60,19 @@ export function canViewAppModule(
 export function getVisibleAppModules(role: Role | null | undefined) {
   return appModules.filter((module) => canViewAppModule(role, module));
 }
+
+export function getRoleHomeHref(role: Role | null | undefined) {
+  switch (role) {
+    case "SUPERADMIN":
+      return "/superadmin";
+    case "ADMIN":
+      return "/admin";
+    case "COZINHA":
+      return "/cozinha";
+    case "CAIXA":
+    case "ATENDENTE":
+      return "/pdv";
+    default:
+      return "/";
+  }
+}

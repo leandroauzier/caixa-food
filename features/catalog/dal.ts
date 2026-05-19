@@ -14,7 +14,12 @@ async function loadCategories(companyId?: string) {
 
     return store.categories
       .filter((category) => (companyId ? category.companyId === companyId : true))
-      .sort((left, right) => left.sortOrder - right.sortOrder)
+      .sort(
+        (left, right) =>
+          (left.sortOrder ?? 0) -
+            (right.sortOrder ?? 0) ||
+          left.name.localeCompare(right.name),
+      )
       .map((category) => {
         const productCount = store.products.filter(
           (product) => product.categoryId === category.id,
@@ -26,6 +31,7 @@ async function loadCategories(companyId?: string) {
           description: category.description || "Sem descricao.",
           productCount,
           active: category.active,
+          sortOrder: category.sortOrder ?? 0,
         };
       });
   }
@@ -49,6 +55,7 @@ async function loadCategories(companyId?: string) {
       description: category.description ?? "Sem descricao.",
       productCount: category._count.products,
       active: category.active,
+      sortOrder: category.sortOrder ?? 0,
     }));
   } catch {
     return [];
@@ -64,7 +71,12 @@ async function loadProducts(companyId?: string) {
 
     return store.products
       .filter((product) => (companyId ? product.companyId === companyId : true))
-      .sort((left, right) => left.name.localeCompare(right.name))
+      .sort(
+        (left, right) =>
+          (left.sortOrder ?? 0) -
+            (right.sortOrder ?? 0) ||
+          left.name.localeCompare(right.name),
+      )
       .map((product) =>
         toProductSummary(
           product,
@@ -80,7 +92,7 @@ async function loadProducts(companyId?: string) {
       include: {
         category: true,
       },
-      orderBy: [{ active: "desc" }, { name: "asc" }],
+      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
     });
 
     return result.map((product) => ({
@@ -94,6 +106,7 @@ async function loadProducts(companyId?: string) {
       stockQuantity: product.stockQuantity,
       minStock: product.minStock,
       active: product.active,
+      sortOrder: product.sortOrder ?? 0,
       options: [],
     }));
   } catch {
@@ -145,7 +158,9 @@ export async function createCategoryRecord(input: {
     }
 
     await updateAppStore((currentStore) => {
-      const sortOrder = currentStore.categories.length;
+      const sortOrder = currentStore.categories.filter(
+        (category) => category.companyId === input.companyId,
+      ).length;
 
       return {
         ...currentStore,
@@ -171,10 +186,45 @@ export async function createCategoryRecord(input: {
     };
   }
 
-  return {
-    persisted: false,
-    message: "Cadastro de categoria via Prisma ainda nao foi ligado neste fluxo.",
-  };
+  try {
+    const duplicate = await prisma.category.findFirst({
+      where: {
+        companyId: input.companyId,
+        name: { equals: input.name, mode: "insensitive" },
+      },
+    });
+
+    if (duplicate) {
+      return {
+        persisted: false,
+        message: "Ja existe uma categoria com esse nome.",
+      };
+    }
+
+    const aggregate = await prisma.category.aggregate({
+      where: { companyId: input.companyId },
+      _max: { sortOrder: true },
+    });
+
+    const category = await prisma.category.create({
+      data: {
+        companyId: input.companyId,
+        name: input.name,
+        description: input.description || null,
+        sortOrder: (aggregate._max.sortOrder ?? -1) + 1,
+      },
+    });
+
+    return {
+      persisted: true,
+      message: `Categoria ${category.name} criada com sucesso.`,
+    };
+  } catch {
+    return {
+      persisted: false,
+      message: "Nao foi possivel salvar no banco agora. Revise a conexao do Prisma.",
+    };
+  }
 }
 
 export async function getProductHighlights() {
@@ -193,6 +243,7 @@ export async function createProductRecord(input: {
   categoryId: string;
   name: string;
   description?: string;
+  imageUrl?: string;
   price: number;
   stockQuantity: number;
   minStock: number;
@@ -221,12 +272,15 @@ export async function createProductRecord(input: {
           categoryId: input.categoryId,
           name: input.name,
           description: input.description || "Sem descricao.",
-          imageUrl: "/menu/classic-burger.svg",
+          imageUrl: input.imageUrl || "/menu/classic-burger.svg",
           price: input.price,
           stockQuantity: input.stockQuantity,
           minStock: input.minStock,
           active: true,
           stockControl: true,
+          sortOrder: currentStore.products.filter(
+            (product) => product.companyId === input.companyId,
+          ).length,
           createdAt: timestamp,
           updatedAt: timestamp,
         },
@@ -240,18 +294,52 @@ export async function createProductRecord(input: {
   }
 
   try {
+    const category = await prisma.category.findFirst({
+      where: {
+        id: input.categoryId,
+        companyId: input.companyId,
+      },
+    });
+
+    if (!category) {
+      return {
+        persisted: false,
+        message: "Categoria invalida para este produto.",
+      };
+    }
+
+    const duplicate = await prisma.product.findFirst({
+      where: {
+        companyId: input.companyId,
+        name: { equals: input.name, mode: "insensitive" },
+      },
+    });
+
+    if (duplicate) {
+      return {
+        persisted: false,
+        message: "Ja existe um produto com esse nome.",
+      };
+    }
+
+    const aggregate = await prisma.product.aggregate({
+      where: { companyId: input.companyId },
+      _max: { sortOrder: true },
+    });
+
     const product = await prisma.product.create({
       data: {
         companyId: input.companyId,
         categoryId: input.categoryId,
         name: input.name,
         description: input.description || null,
-        imageUrl: "/menu/classic-burger.svg",
+        imageUrl: input.imageUrl || "/menu/classic-burger.svg",
         price: new Prisma.Decimal(input.price),
         stockQuantity: input.stockQuantity,
         minStock: input.minStock,
         stockControl: true,
         active: true,
+        sortOrder: (aggregate._max.sortOrder ?? -1) + 1,
       },
     });
 
@@ -281,4 +369,81 @@ export async function getInventoryAlerts() {
 
 export async function getCategoryOptions(): Promise<CategorySummary[]> {
   return getCategorySummaries();
+}
+
+export async function reorderCategoriesRecord(input: {
+  companyId?: string;
+  categoryIds: string[];
+}) {
+  if (!process.env.DATABASE_URL || process.env.DEMO_MODE !== "false") {
+    await updateAppStore((currentStore) => {
+      const orderMap = new Map(
+        input.categoryIds.map((categoryId, index) => [categoryId, index]),
+      );
+
+      return {
+        ...currentStore,
+        categories: currentStore.categories.map((category) =>
+          (input.companyId ? category.companyId === input.companyId : true) &&
+          orderMap.has(category.id)
+            ? {
+                ...category,
+                sortOrder: orderMap.get(category.id) ?? category.sortOrder,
+              }
+            : category,
+        ),
+      };
+    });
+
+    return { persisted: true };
+  }
+
+  await prisma.$transaction(
+    input.categoryIds.map((id, sortOrder) =>
+      prisma.category.update({
+        where: { id },
+        data: { sortOrder },
+      }),
+    ),
+  );
+
+  return { persisted: true };
+}
+
+export async function reorderProductsRecord(input: {
+  companyId: string;
+  productIds: string[];
+}) {
+  if (!process.env.DATABASE_URL || process.env.DEMO_MODE !== "false") {
+    await updateAppStore((currentStore) => {
+      const orderMap = new Map(
+        input.productIds.map((productId, index) => [productId, index]),
+      );
+
+      return {
+        ...currentStore,
+        products: currentStore.products.map((product) =>
+          product.companyId === input.companyId && orderMap.has(product.id)
+            ? {
+                ...product,
+                sortOrder: orderMap.get(product.id) ?? product.sortOrder,
+              }
+            : product,
+        ),
+      };
+    });
+
+    return { persisted: true };
+  }
+
+  await prisma.$transaction(
+    input.productIds.map((id, sortOrder) =>
+      prisma.product.update({
+        where: { id },
+        data: { sortOrder },
+      }),
+    ),
+  );
+
+  return { persisted: true };
 }

@@ -19,6 +19,7 @@ export const productSchema = z.object({
   name: z.string().trim().min(2, "Nome obrigatorio."),
   description: z.string().trim().max(180).optional().or(z.literal("")),
   categoryId: z.string().trim().min(1, "Escolha uma categoria."),
+  imageUrl: z.string().trim().optional().or(z.literal("")),
   price: z.coerce.number().positive("Preco precisa ser maior que zero."),
   stockQuantity: z.coerce.number().int().min(0, "Estoque invalido."),
   minStock: z.coerce.number().int().min(0, "Minimo invalido."),

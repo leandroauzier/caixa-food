@@ -14,6 +14,7 @@ export const categories: CategorySummary[] = [
     description: "Lanches principais da casa.",
     productCount: 3,
     active: true,
+    sortOrder: 0,
   },
   {
     id: "cat_sides",
@@ -21,6 +22,7 @@ export const categories: CategorySummary[] = [
     description: "Batatas, molhos e adicionais rapidos.",
     productCount: 1,
     active: true,
+    sortOrder: 1,
   },
   {
     id: "cat_drinks",
@@ -28,6 +30,7 @@ export const categories: CategorySummary[] = [
     description: "Refrigerantes, limonadas e refrescos.",
     productCount: 2,
     active: true,
+    sortOrder: 2,
   },
 ];
 
@@ -116,6 +119,7 @@ export const products: ProductSummary[] = [
     stockQuantity: 18,
     minStock: 8,
     active: true,
+    sortOrder: 0,
     options: productOptions.filter((option) => option.productId === "prod_classic"),
   },
   {
@@ -129,6 +133,7 @@ export const products: ProductSummary[] = [
     stockQuantity: 9,
     minStock: 8,
     active: true,
+    sortOrder: 1,
     options: productOptions.filter((option) => option.productId === "prod_bacon"),
   },
   {
@@ -142,6 +147,7 @@ export const products: ProductSummary[] = [
     stockQuantity: 6,
     minStock: 6,
     active: true,
+    sortOrder: 2,
     options: productOptions.filter((option) => option.productId === "prod_veggie"),
   },
   {
@@ -155,6 +161,7 @@ export const products: ProductSummary[] = [
     stockQuantity: 22,
     minStock: 10,
     active: true,
+    sortOrder: 3,
     options: productOptions.filter((option) => option.productId === "prod_fries"),
   },
   {
@@ -168,6 +175,7 @@ export const products: ProductSummary[] = [
     stockQuantity: 4,
     minStock: 6,
     active: true,
+    sortOrder: 4,
     options: productOptions.filter((option) => option.productId === "prod_soda"),
   },
   {
@@ -181,6 +189,7 @@ export const products: ProductSummary[] = [
     stockQuantity: 16,
     minStock: 5,
     active: true,
+    sortOrder: 5,
     options: productOptions.filter((option) => option.productId === "prod_lemonade"),
   },
 ];

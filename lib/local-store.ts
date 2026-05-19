@@ -52,6 +52,7 @@ function productSeed(): StoreProduct[] {
     minStock: product.minStock,
     active: product.active,
     stockControl: true,
+    sortOrder: product.sortOrder,
     createdAt: timestamp,
     updatedAt: timestamp,
   }));
@@ -131,20 +132,21 @@ export function toProductSummary(
   category?: StoreCategory,
   options: StoreProductOption[] = [],
 ): ProductSummary {
-  return {
-    id: product.id,
-    categoryId: product.categoryId,
-    categoryName: category?.name ?? "Sem categoria",
-    name: product.name,
-    description: product.description,
-    price: product.price,
-    stockQuantity: product.stockQuantity,
-    minStock: product.minStock,
-    active: product.active,
-    imageUrl: product.imageUrl || "/menu/classic-burger.svg",
-    options: options
-      .filter((option) => option.productId === product.id && option.active)
-      .map((option) => ({
+    return {
+      id: product.id,
+      categoryId: product.categoryId,
+      categoryName: category?.name ?? "Sem categoria",
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      stockQuantity: product.stockQuantity,
+      minStock: product.minStock,
+      active: product.active,
+      imageUrl: product.imageUrl || "/menu/classic-burger.svg",
+      sortOrder: product.sortOrder ?? 0,
+      options: options
+        .filter((option) => option.productId === product.id && option.active)
+        .map((option) => ({
         id: option.id,
         productId: option.productId,
         name: option.name,

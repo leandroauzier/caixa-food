@@ -51,6 +51,7 @@ export type CategorySummary = {
   description: string;
   productCount: number;
   active: boolean;
+  sortOrder?: number;
 };
 
 export type ProductSummary = {
@@ -64,6 +65,7 @@ export type ProductSummary = {
   minStock: number;
   active: boolean;
   imageUrl: string;
+  sortOrder?: number;
   options: ProductOptionSummary[];
 };
 
@@ -150,6 +152,7 @@ export type StoreProduct = {
   minStock: number;
   active: boolean;
   stockControl: boolean;
+  sortOrder?: number;
   createdAt: string;
   updatedAt: string;
 };

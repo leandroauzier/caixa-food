@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 
 import {
   createProductAction,
@@ -17,6 +18,31 @@ export function ProductQuickForm({
   categories: CategorySummary[];
 }) {
   const [state, formAction] = useActionState(createProductAction, initialState);
+  const [imageUrl, setImageUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
+
+  useEffect(() => {
+    setPreviewUrl(imageUrl);
+  }, [imageUrl]);
+
+  async function handleFileChange(
+    event: ChangeEvent<HTMLInputElement>,
+  ) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setImageUrl("");
+      setPreviewUrl("");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const value = typeof reader.result === "string" ? reader.result : "";
+      setImageUrl(value);
+      setPreviewUrl(value);
+    };
+    reader.readAsDataURL(file);
+  }
 
   return (
     <form action={formAction} className="grid gap-4 md:grid-cols-2">
@@ -66,6 +92,39 @@ export function ProductQuickForm({
           placeholder="Resumo rápido para PDV e cardápio."
         />
       </label>
+
+      <div className="md:col-span-2 grid gap-4 md:grid-cols-[160px_minmax(0,1fr)]">
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-3">
+          <div className="flex aspect-square items-center justify-center overflow-hidden rounded-xl bg-white">
+            {previewUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={previewUrl}
+                alt="Preview do produto"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span className="text-center text-xs uppercase tracking-[0.2em] text-slate-400">
+                Sem imagem
+              </span>
+            )}
+          </div>
+        </div>
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Imagem do produto
+          <input
+            name="productImage"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition file:mr-4 file:rounded-full file:border-0 file:bg-slate-950 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white focus:border-slate-950"
+          />
+          <input type="hidden" name="imageUrl" value={imageUrl} />
+          <span className="text-xs text-slate-500">
+            A imagem fica vinculada ao produto e aparece nas listagens do sistema.
+          </span>
+        </label>
+      </div>
 
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
         Preço

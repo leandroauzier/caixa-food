@@ -4,6 +4,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { SectionCard } from "@/components/ui/section-card";
 import { getCategorySummaries, getProductSummaries } from "@/features/catalog/dal";
 import { requireRoles } from "@/lib/auth";
+import { reorderProductsAction } from "./actions";
 
 export default async function AdminProductsPage() {
   const user = await requireRoles(["SUPERADMIN", "ADMIN"]);
@@ -28,11 +29,13 @@ export default async function AdminProductsPage() {
 
       <SectionCard
         title="Catálogo ativo"
-        description="Lista base para admin, cozinha e frente de caixa."
+        description="Arraste para mudar a ordem de exibição do catálogo."
       >
-        <ProductTable products={productItems} />
+        <ProductTable
+          products={productItems}
+          onOrderChange={reorderProductsAction}
+        />
       </SectionCard>
     </AppShell>
   );
 }
-
