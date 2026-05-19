@@ -1,84 +1,11 @@
 import type {
-  AppModule,
   CategorySummary,
-  DashboardMetric,
   InventoryAlert,
   OrderSummary,
   ProductOptionSummary,
   ProductSummary,
   ReportSummary,
-  SessionUser,
 } from "@/types/domain";
-
-export const demoSessionUser: SessionUser = {
-  id: "user_superadmin_demo",
-  companyId: "company_demo",
-  companyName: "Caixa Food Demo",
-  role: "SUPERADMIN",
-  name: "Leandro Demo",
-  email: "superadmin@caixafood.dev",
-};
-
-export const appModules: AppModule[] = [
-  {
-    title: "Superadmin",
-    description: "Empresas, usuarios e dados globais.",
-    href: "/superadmin",
-    accent: "from-violet-300 via-purple-400 to-indigo-500",
-    allowedRoles: ["SUPERADMIN"],
-  },
-  {
-    title: "Admin",
-    description: "Cadastro, estoque, usuarios e relatorios.",
-    href: "/admin",
-    accent: "from-amber-300 via-orange-400 to-rose-500",
-    allowedRoles: ["SUPERADMIN", "ADMIN"],
-  },
-  {
-    title: "PDV",
-    description: "Pedido rapido, carrinho e fechamento de venda.",
-    href: "/pdv",
-    accent: "from-emerald-300 via-teal-400 to-cyan-500",
-    allowedRoles: ["SUPERADMIN", "ADMIN", "CAIXA", "ATENDENTE"],
-  },
-  {
-    title: "Cozinha",
-    description: "Fila operacional com status e observacoes.",
-    href: "/cozinha",
-    accent: "from-sky-300 via-blue-400 to-indigo-500",
-    allowedRoles: ["SUPERADMIN", "ADMIN", "COZINHA"],
-  },
-  {
-    title: "Cardapio",
-    description: "Vitrine publica pronta para evoluir para QR Code.",
-    href: "/cardapio",
-    accent: "from-fuchsia-300 via-pink-400 to-rose-500",
-    allowedRoles: "all",
-  },
-];
-
-export const dashboardMetrics: DashboardMetric[] = [
-  {
-    label: "Vendas do dia",
-    value: "R$ 3.420,00",
-    hint: "12% acima da media dos ultimos 7 dias.",
-  },
-  {
-    label: "Pedidos em aberto",
-    value: "18",
-    hint: "6 aguardando cozinha e 4 esperando pagamento.",
-  },
-  {
-    label: "Caixa ativo",
-    value: "01",
-    hint: "Aberto as 08:00 com fundo inicial de R$ 200,00.",
-  },
-  {
-    label: "Itens com estoque baixo",
-    value: "03",
-    hint: "Revisar Coca-Cola 2L, pao brioche e molho especial.",
-  },
-];
 
 export const categories: CategorySummary[] = [
   {

@@ -3,9 +3,14 @@ import Link from "next/link";
 import { ModuleCard } from "@/components/dashboard/module-card";
 import { SectionCard } from "@/components/ui/section-card";
 import { StatCard } from "@/components/ui/stat-card";
-import { appModules, dashboardMetrics } from "@/features/core/demo-data";
+import { getVisibleAppModules } from "@/features/core/app-modules";
+import { dashboardMetrics } from "@/features/core/dashboard-metrics";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function Home() {
+  const user = await getCurrentUser();
+  const visibleModules = getVisibleAppModules(user?.role);
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.98),_rgba(226,232,240,0.92),_rgba(254,240,138,0.55))] px-4 py-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-8">
@@ -45,13 +50,35 @@ export default async function Home() {
 
         <SectionCard
           title="Módulos do sistema"
-          description="Cada área tem responsabilidade própria e reaproveita os mesmos componentes-base."
+          description={
+            user
+              ? "Cada área tem responsabilidade própria e os blocos aparecem conforme a sua role."
+              : "Entre para ver os módulos liberados para a sua conta."
+          }
         >
-          <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
-            {appModules.map((module) => (
-              <ModuleCard key={module.href} module={module} />
-            ))}
-          </div>
+          {visibleModules.length > 0 ? (
+            <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
+              {visibleModules.map((module) => (
+                <ModuleCard key={module.href} module={module} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-[24px] border border-slate-200 bg-slate-50 p-6">
+              <p className="text-sm font-semibold text-slate-950">
+                Entre com uma conta autorizada para liberar os módulos.
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                A home continua aberta, mas os acessos ficam condicionados ao
+                `userRole` real vindo da sessão.
+              </p>
+              <Link
+                href="/login"
+                className="mt-4 inline-flex rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white"
+              >
+                Ir para login
+              </Link>
+            </div>
+          )}
         </SectionCard>
 
         <SectionCard

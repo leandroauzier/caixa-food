@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { appModules } from "@/features/core/demo-data";
+import { getVisibleAppModules } from "@/features/core/app-modules";
 import { LogoutButton } from "@/components/layout/logout-button";
 import type { SessionUser } from "@/types/domain";
 
@@ -53,13 +53,7 @@ export function AppShell({
           </div>
 
           <nav className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 lg:mx-0 lg:grid lg:grid-cols-1 lg:overflow-visible lg:px-0 lg:pb-0">
-            {appModules
-              .filter(
-                (m) =>
-                  m.allowedRoles === "all" ||
-                  m.allowedRoles.includes(user.role),
-              )
-              .map((module) => {
+            {getVisibleAppModules(user.role).map((module) => {
               const active = currentPath.startsWith(module.href);
 
               return (

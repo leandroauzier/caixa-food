@@ -4,7 +4,6 @@ import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { demoSessionUser } from "@/features/core/demo-data";
 import { hasPermission, type Permission } from "@/lib/permissions";
 import { COOKIE_NAME, decryptSession } from "@/lib/session";
 import type { Role, SessionUser } from "@/types/domain";
@@ -14,15 +13,7 @@ export const getCurrentUser = cache(async (): Promise<SessionUser | null> => {
   const token = cookieStore.get(COOKIE_NAME)?.value;
   const session = await decryptSession(token);
 
-  if (session?.user) {
-    return session.user;
-  }
-
-  if (process.env.DEMO_MODE !== "false") {
-    return demoSessionUser;
-  }
-
-  return null;
+  return session?.user ?? null;
 });
 
 export async function requireUser() {
@@ -53,4 +44,3 @@ export async function requirePermission(permission: Permission) {
 
   return user;
 }
-
